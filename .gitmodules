@@ -1,0 +1,3 @@
+[submodule "libs/regs"]
+	path = libs/regs
+	url = https://github.com/tastenmo/regs.git

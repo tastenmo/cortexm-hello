@@ -36,6 +36,8 @@ endif()
 
 project(cortexm_hello LANGUAGES C CXX ASM)
 
+add_subdirectory(libs/regs)
+
 set(ARM_NEWLIB_INCLUDE_DIR "/usr/include/newlib" CACHE PATH "Path to newlib headers")
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
@@ -52,6 +54,12 @@ add_executable(hello.elf
     src/startup.cpp
     src/main.cpp
 )
+
+target_include_directories(hello.elf PRIVATE
+    ${CMAKE_SOURCE_DIR}/include
+)
+
+target_link_libraries(hello.elf PRIVATE regs::regs)
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     target_include_directories(hello.elf PRIVATE
