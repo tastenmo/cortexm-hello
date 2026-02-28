@@ -1,5 +1,21 @@
 cmake_minimum_required(VERSION 3.20)
 
+set(ARM_TOOLCHAIN "gcc" CACHE STRING "Toolchain from /opt/toolchains: gcc or clang")
+set_property(CACHE ARM_TOOLCHAIN PROPERTY STRINGS gcc clang)
+
+if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+    if(ARM_TOOLCHAIN STREQUAL "clang")
+        set(_default_toolchain_file "/opt/toolchains/arm-none-eabi-clang.cmake")
+    else()
+        set(_default_toolchain_file "/opt/toolchains/arm-none-eabi-gcc.cmake")
+    endif()
+
+    if(EXISTS "${_default_toolchain_file}")
+        set(CMAKE_TOOLCHAIN_FILE "${_default_toolchain_file}" CACHE FILEPATH "CMake toolchain file" FORCE)
+        message(STATUS "Using default toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
+    endif()
+endif()
+
 set(CROSS_PREFIX "arm-none-eabi" CACHE STRING "Cross-compiler prefix")
 
 if(NOT DEFINED CMAKE_SYSTEM_NAME)

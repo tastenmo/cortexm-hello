@@ -1,0 +1,71 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 20,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "base",
+      "displayName": "Base",
+      "description": "Common Cortex-M configure settings",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+    {
+      "name": "gcc",
+      "displayName": "ARM GCC",
+      "description": "Use /opt/toolchains/arm-none-eabi-gcc.cmake",
+      "inherits": "base",
+      "toolchainFile": "/opt/toolchains/arm-none-eabi-gcc.cmake",
+      "cacheVariables": {
+        "CORTEX_CPU": "cortex-m3"
+      }
+    },
+    {
+      "name": "clang",
+      "displayName": "ARM Clang",
+      "description": "Use /opt/toolchains/arm-none-eabi-clang.cmake",
+      "inherits": "base",
+      "toolchainFile": "/opt/toolchains/arm-none-eabi-clang.cmake",
+      "cacheVariables": {
+        "CORTEX_CPU": "cortex-m3"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "gcc",
+      "displayName": "Build (ARM GCC)",
+      "configurePreset": "gcc",
+      "jobs": 8
+    },
+    {
+      "name": "clang",
+      "displayName": "Build (ARM Clang)",
+      "configurePreset": "clang",
+      "jobs": 8
+    },
+    {
+      "name": "run-gcc",
+      "displayName": "Run in QEMU (ARM GCC)",
+      "configurePreset": "gcc",
+      "targets": [
+        "run"
+      ]
+    },
+    {
+      "name": "run-clang",
+      "displayName": "Run in QEMU (ARM Clang)",
+      "configurePreset": "clang",
+      "targets": [
+        "run"
+      ]
+    }
+  ]
+}
