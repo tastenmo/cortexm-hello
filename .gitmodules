@@ -1,3 +1,6 @@
 [submodule "libs/regs"]
 	path = libs/regs
 	url = https://github.com/tastenmo/regs.git
+[submodule "libs/pico-sdk"]
+	path = libs/pico-sdk
+	url = https://github.com/raspberrypi/pico-sdk.git
